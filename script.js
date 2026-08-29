@@ -237,13 +237,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update Final Results with per-meter primary units
         document.getElementById('res-total').innerHTML = `${formatScientific(R_per_m)} &Omega;/m`;
-        document.getElementById('res-sub').innerHTML = `Total (${L_len} m): ${formatScientific(R_total)} &Omega;`;
-
         document.getElementById('ind-total').textContent = `${formatScientific(L_per_m)} H/m`;
-        document.getElementById('ind-sub').textContent = `Total (${L_len} m): ${formatScientific(L_total)} H`;
-
         document.getElementById('cap-total').textContent = `${formatScientific(C_per_m)} F/m`;
-        document.getElementById('cap-sub').textContent = `Total (${L_len} m): ${formatScientific(C_total)} F`;
         
         // Show results with smooth transition
         toggleVisibility(resultsPanel, true);

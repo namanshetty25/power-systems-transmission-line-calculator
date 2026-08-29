@@ -618,18 +618,11 @@ select option {
 
 .result-value {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 1.25rem;
+    font-size: 1.18rem;
     font-weight: 700;
     color: var(--text-primary);
-    word-break: break-all;
-}
-
-.result-sub {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.76rem;
-    color: var(--text-muted);
-    margin-top: 0.35rem;
-    display: block;
+    line-height: 1.35;
+    word-break: break-word;
 }
 
 footer {
