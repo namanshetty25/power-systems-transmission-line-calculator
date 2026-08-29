@@ -1,4 +1,5 @@
 # Transmission Line Parameter Calculator (R, L, C)
+> **EE 315 &bull; Power Systems Course Project &bull; Group 4**
 
 A generalized computation tool for calculating the total **Resistance ($R$)**, **Inductance ($L$)**, and **Capacitance ($C$)** of overhead transmission lines based on Power Systems concepts (EE 315 / Module-2).
 

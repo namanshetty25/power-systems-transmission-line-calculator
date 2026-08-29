@@ -188,9 +188,40 @@ document.addEventListener('DOMContentLoaded', () => {
         // Show results with smooth transition
         toggleVisibility(resultsPanel, true);
         
+        // Re-render any dynamically rendered KaTeX formulas if available
+        if (window.renderMathInElement) {
+            window.renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ],
+                throwOnError: false
+            });
+        }
+        
         // Scroll to results slightly
         setTimeout(() => {
             resultsPanel.scrollIntoView({ behavior: 'smooth', block: 'end' });
         }, 100);
     });
+
+    // Initial KaTeX render on page load
+    const initMath = () => {
+        if (window.renderMathInElement) {
+            window.renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ],
+                throwOnError: false
+            });
+        }
+    };
+    
+    // Check if KaTeX already loaded or poll briefly
+    if (window.renderMathInElement) {
+        initMath();
+    } else {
+        window.addEventListener('load', initMath);
+    }
 });

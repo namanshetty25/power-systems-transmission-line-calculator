@@ -3,25 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transmission Line Calculator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>EE 315 | Transmission Line Parameter Calculator - Group 4</title>
+    
+    <!-- Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- KaTeX for LaTeX Math Rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="background-animation"></div>
+    <div class="grid-pattern-bg"></div>
+
     <main class="glass-panel">
         <header>
-            <h1>Transmission Line Calculator</h1>
-            <p>Compute precise electrical parameters for complex overhead configurations.</p>
+            <div class="course-badge">
+                <span class="dot"></span>
+                <span>EE 315 &bull; Power Systems &bull; Group 4</span>
+            </div>
+            <h1>Transmission Line Parameter Calculator</h1>
+            <p>Compute generalized $R$, $L$, and $C$ line constants for Single &amp; Three-Phase overhead configurations.</p>
         </header>
 
         <form id="calculator-form">
             <!-- Conductor Configuration -->
             <section class="form-section">
-                <h2><span class="section-number">1</span> Conductor Configuration</h2>
+                <div class="section-header">
+                    <span class="section-number">01</span>
+                    <h2>Conductor Configuration</h2>
+                </div>
                 
                 <div class="input-group mt-1">
-                    <label>Conductor Stranding</label>
+                    <label>Conductor Stranding Architecture</label>
                     <div class="radio-group">
                         <label class="radio-card">
                             <input type="radio" name="strand-type" value="single" checked> 
@@ -29,24 +45,24 @@
                         </label>
                         <label class="radio-card">
                             <input type="radio" name="strand-type" value="multiple"> 
-                            <span class="radio-label">Multiple Strands</span>
+                            <span class="radio-label">Multiple Strands / Bundles</span>
                         </label>
                     </div>
                 </div>
 
                 <div class="input-group hidden-dynamic" id="bundle-type-group">
-                    <label for="bundle-type">Type of Conductor</label>
+                    <label for="bundle-type">Conductor Bundle / ACSR Spec</label>
                     <select id="bundle-type" name="bundle-type">
-                        <option value="2-bundle">2-bundle</option>
-                        <option value="3-bundle">3-bundle</option>
-                        <option value="4-bundle">4-bundle</option>
-                        <option value="acsr">6/1 ACSR</option>
+                        <option value="2-bundle">2-Bundle Conductor</option>
+                        <option value="3-bundle">3-Bundle Conductor</option>
+                        <option value="4-bundle">4-Bundle Conductor</option>
+                        <option value="acsr">6/1 ACSR (7-Strand)</option>
                     </select>
                 </div>
 
                 <div class="input-row">
                     <div class="input-group">
-                        <label for="radius">Radius of Conductor/Strand (m)</label>
+                        <label for="radius">Strand / Conductor Radius $r$ (m)</label>
                         <input type="number" id="radius" name="radius" step="any" placeholder="e.g. 0.012" required>
                     </div>
                     <div class="input-group hidden-dynamic" id="bundle-spacing-group">
@@ -58,10 +74,13 @@
 
             <!-- System Configuration -->
             <section class="form-section">
-                <h2><span class="section-number">2</span> System Configuration</h2>
+                <div class="section-header">
+                    <span class="section-number">02</span>
+                    <h2>System &amp; Geometry Configuration</h2>
+                </div>
                 
                 <div class="input-group mt-1">
-                    <label>System Type</label>
+                    <label>Phase System</label>
                     <div class="radio-group">
                         <label class="radio-card">
                             <input type="radio" name="system-type" value="single-phase" checked> 
@@ -76,14 +95,14 @@
 
                 <!-- Single Phase Inputs -->
                 <div class="input-group visible-dynamic" id="single-phase-inputs">
-                    <label for="distance-d">Distance between conductors $D$ (m)</label>
-                    <input type="number" id="distance-d" name="distance-d" step="any">
+                    <label for="distance-d">Distance Between Conductors $D$ (m)</label>
+                    <input type="number" id="distance-d" name="distance-d" placeholder="e.g. 4.0" step="any">
                 </div>
 
                 <!-- Three Phase Inputs -->
                 <div class="hidden-dynamic" id="three-phase-inputs">
                     <div class="input-group">
-                        <label>Circuit Type</label>
+                        <label>Tower Circuit Layout</label>
                         <div class="radio-group">
                             <label class="radio-card">
                                 <input type="radio" name="circuit-type" value="single-circuit" checked> 
@@ -98,36 +117,36 @@
 
                     <div class="input-row">
                         <div class="input-group">
-                            <label for="d12">D<sub>12</sub> (m)</label>
-                            <input type="number" id="d12" name="d12" step="any">
+                            <label for="d12">$D_{12}$ (m)</label>
+                            <input type="number" id="d12" name="d12" placeholder="Phase 1-2 spacing" step="any">
                         </div>
                         <div class="input-group">
-                            <label for="d23">D<sub>23</sub> (m)</label>
-                            <input type="number" id="d23" name="d23" step="any">
+                            <label for="d23">$D_{23}$ (m)</label>
+                            <input type="number" id="d23" name="d23" placeholder="Phase 2-3 spacing" step="any">
                         </div>
                         <div class="input-group">
-                            <label for="d31">D<sub>31</sub> (m)</label>
-                            <input type="number" id="d31" name="d31" step="any">
+                            <label for="d31">$D_{31}$ (m)</label>
+                            <input type="number" id="d31" name="d31" placeholder="Phase 3-1 spacing" step="any">
                         </div>
                     </div>
 
                     <!-- Double Circuit Extra Inputs -->
                     <div class="input-row hidden-dynamic" id="double-circuit-inputs">
                         <div class="input-group">
-                            <label for="d1">d<sub>1</sub> (cross 1) (m)</label>
-                            <input type="number" id="d1" name="d1" step="any">
+                            <label for="d1">$d_1$ (cross-distance 1) (m)</label>
+                            <input type="number" id="d1" name="d1" placeholder="d1" step="any">
                         </div>
                         <div class="input-group">
-                            <label for="d2">d<sub>2</sub> (cross 2) (m)</label>
-                            <input type="number" id="d2" name="d2" step="any">
+                            <label for="d2">$d_2$ (cross-distance 2) (m)</label>
+                            <input type="number" id="d2" name="d2" placeholder="d2" step="any">
                         </div>
                         <div class="input-group">
-                            <label for="d3">d<sub>3</sub> (cross 3) (m)</label>
-                            <input type="number" id="d3" name="d3" step="any">
+                            <label for="d3">$d_3$ (cross-distance 3) (m)</label>
+                            <input type="number" id="d3" name="d3" placeholder="d3" step="any">
                         </div>
                         <div class="input-group">
-                            <label for="d4">d<sub>4</sub> (cross 4) (m)</label>
-                            <input type="number" id="d4" name="d4" step="any">
+                            <label for="d4">$d_4$ (cross-distance 4) (m)</label>
+                            <input type="number" id="d4" name="d4" placeholder="d4" step="any">
                         </div>
                     </div>
                 </div>
@@ -135,65 +154,82 @@
 
             <!-- Line Details -->
             <section class="form-section">
-                <h2><span class="section-number">3</span> Material & Properties</h2>
+                <div class="section-header">
+                    <span class="section-number">03</span>
+                    <h2>Material &amp; Line Span</h2>
+                </div>
                 <div class="input-row">
                     <div class="input-group">
-                        <label for="resistivity">Resistivity &rho; (&Omega;&middot;m)</label>
-                        <input type="number" id="resistivity" name="resistivity" step="any" value="2.83e-8" required>
+                        <label for="resistivity">Conductor Resistivity $\rho$ ($\Omega\cdot\text{m}$)</label>
+                        <input type="number" id="resistivity" name="resistivity" step="any" value="2.8e-8" required>
                     </div>
                     <div class="input-group">
-                        <label for="length">Line Length <i>l</i> (m)</label>
-                        <input type="number" id="length" name="length" step="any" required>
+                        <label for="length">Line Length $l$ (m)</label>
+                        <input type="number" id="length" name="length" placeholder="e.g. 100000" step="any" required>
                     </div>
                 </div>
             </section>
 
             <button type="submit" class="primary-btn">
-                <span>Calculate Parameters</span>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <span>Calculate Line Parameters</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M13 5L20 12L13 19M4 12H20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
         </form>
 
         <div id="results" class="results-panel hidden-dynamic">
             <div class="results-header">
-                <h2>Computed Parameters</h2>
+                <h2>Computed Transmission Line Parameters</h2>
+                <p>Derived via GMD / GMR formulation</p>
             </div>
             
             <div class="intermediate-results">
                 <div class="intermediate-item">
-                    <span class="intermediate-label">GMD</span>
+                    <span class="intermediate-label">Geometric Mean Distance ($\text{GMD}$)</span>
                     <span class="intermediate-value"><span id="res-gmd"></span> m</span>
                 </div>
                 <div class="intermediate-item">
-                    <span class="intermediate-label">GMR<sub>L</sub></span>
+                    <span class="intermediate-label">$\text{GMR}_L$ (Inductive)</span>
                     <span class="intermediate-value"><span id="res-gmrl"></span> m</span>
                 </div>
                 <div class="intermediate-item">
-                    <span class="intermediate-label">GMR<sub>C</sub></span>
+                    <span class="intermediate-label">$\text{GMR}_C$ (Capacitive)</span>
                     <span class="intermediate-value"><span id="res-gmrc"></span> m</span>
                 </div>
             </div>
 
             <div class="results-grid">
                 <div class="result-card res-resistance">
-                    <div class="result-icon">R</div>
-                    <h3>Resistance</h3>
+                    <div class="result-top">
+                        <div class="result-icon">R</div>
+                        <span class="result-tag">Series Loss</span>
+                    </div>
+                    <h3>Total Resistance ($R$)</h3>
                     <p id="res-total" class="result-value">0 &Omega;</p>
                 </div>
                 <div class="result-card res-inductance">
-                    <div class="result-icon">L</div>
-                    <h3>Inductance</h3>
+                    <div class="result-top">
+                        <div class="result-icon">L</div>
+                        <span class="result-tag">Series Reactance</span>
+                    </div>
+                    <h3>Total Inductance ($L$)</h3>
                     <p id="ind-total" class="result-value">0 H</p>
                 </div>
                 <div class="result-card res-capacitance">
-                    <div class="result-icon">C</div>
-                    <h3>Capacitance</h3>
+                    <div class="result-top">
+                        <div class="result-icon">C</div>
+                        <span class="result-tag">Shunt Admittance</span>
+                    </div>
+                    <h3>Total Capacitance ($C$)</h3>
                     <p id="cap-total" class="result-value">0 F</p>
                 </div>
             </div>
         </div>
+
+        <footer>
+            <span>EE 315 &bull; Power Systems Course Project &bull; Group 4</span>
+        </footer>
     </main>
 
     <script src="script.js"></script>
