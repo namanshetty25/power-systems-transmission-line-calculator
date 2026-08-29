@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('calculator-form');
+    const calculateBtn = document.getElementById('calculate-btn');
     
     // Elements for conditional rendering
     const strandTypeRadios = document.getElementsByName('strand-type');
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const doubleCircuitInputs = document.getElementById('double-circuit-inputs');
 
     const resultsPanel = document.getElementById('results');
+    const caseCards = document.querySelectorAll('.case-card');
 
     function toggleVisibility(el, show) {
         if (show) {
@@ -72,10 +74,69 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function selectCase(cardId) {
+        caseCards.forEach(c => c.classList.remove('active-case'));
+        const activeCard = document.getElementById(cardId);
+        if (activeCard) activeCard.classList.add('active-case');
+
+        // Smooth scroll to the calculate button so the user can verify & click
+        const anchor = document.getElementById('action-anchor');
+        if (anchor) {
+            anchor.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            calculateBtn.classList.add('highlight-pulse');
+            setTimeout(() => {
+                calculateBtn.classList.remove('highlight-pulse');
+            }, 2500);
+        }
+    }
+
     strandTypeRadios.forEach(r => r.addEventListener('change', updateUI));
     bundleTypeSelect.addEventListener('change', updateUI);
     systemTypeRadios.forEach(r => r.addEventListener('change', updateUI));
     circuitTypeRadios.forEach(r => r.addEventListener('change', updateUI));
+
+    // Preset Handlers
+    document.getElementById('preset-1')?.addEventListener('click', () => {
+        // Case 1: DC Resistance (05_Aug Slide 20)
+        document.querySelector('input[name="strand-type"][value="single"]').checked = true;
+        document.getElementById('radius').value = 0.00564;
+        document.querySelector('input[name="system-type"][value="single-phase"]').checked = true;
+        document.getElementById('distance-d').value = 1;
+        document.getElementById('resistivity').value = '2.8e-8';
+        document.getElementById('length').value = 10000;
+        updateUI();
+        selectCase('preset-1');
+    });
+
+    document.getElementById('preset-2')?.addEventListener('click', () => {
+        // Case 2: Inductance 7-Strand (11_Aug Slide 11)
+        document.querySelector('input[name="strand-type"][value="multiple"]').checked = true;
+        bundleTypeSelect.value = 'acsr';
+        document.getElementById('radius').value = 0.0168;
+        document.querySelector('input[name="system-type"][value="single-phase"]').checked = true;
+        document.getElementById('distance-d').value = 1;
+        document.getElementById('resistivity').value = '2.8e-8';
+        document.getElementById('length').value = 1000;
+        updateUI();
+        selectCase('preset-2');
+    });
+
+    document.getElementById('preset-3')?.addEventListener('click', () => {
+        // Case 3: 3-Phase Bundled Capacitance (12_Aug Slide 21)
+        document.querySelector('input[name="strand-type"][value="multiple"]').checked = true;
+        bundleTypeSelect.value = '2-bundle';
+        document.getElementById('radius').value = 0.012;
+        document.getElementById('bundle-spacing').value = 0.4;
+        document.querySelector('input[name="system-type"][value="three-phase"]').checked = true;
+        document.querySelector('input[name="circuit-type"][value="single-circuit"]').checked = true;
+        document.getElementById('d12').value = 10;
+        document.getElementById('d23').value = 10;
+        document.getElementById('d31').value = 20;
+        document.getElementById('resistivity').value = '2.8e-8';
+        document.getElementById('length').value = 1000;
+        updateUI();
+        selectCase('preset-3');
+    });
 
     updateUI(); // Init
 
@@ -172,13 +233,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Output formatting
         function formatScientific(num) {
             if (num === 0) return "0";
-            return num.toExponential(6); 
+            if (num >= 0.01 && num < 10000) return num.toFixed(4);
+            return num.toExponential(4); 
         }
 
         // Update Intermediate results
-        document.getElementById('res-gmd').textContent = GMD.toFixed(6);
-        document.getElementById('res-gmrl').textContent = GMRL.toFixed(6);
-        document.getElementById('res-gmrc').textContent = GMRC.toFixed(6);
+        document.getElementById('res-gmd').textContent = GMD.toFixed(5);
+        document.getElementById('res-gmrl').textContent = GMRL.toFixed(5);
+        document.getElementById('res-gmrc').textContent = GMRC.toFixed(5);
 
         // Update Final Results
         document.getElementById('res-total').innerHTML = `${formatScientific(R_total)} &Omega;`;
@@ -218,7 +280,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
     
-    // Check if KaTeX already loaded or poll briefly
     if (window.renderMathInElement) {
         initMath();
     } else {

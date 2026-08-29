@@ -18,219 +18,292 @@
 <body>
     <div class="grid-pattern-bg"></div>
 
-    <main class="glass-panel">
-        <header>
-            <div class="course-badge">
-                <span class="dot"></span>
-                <span>EE 315 &bull; Power Systems &bull; Group 4</span>
+    <div class="app-layout">
+        <!-- Left Sidebar: Lecture Problems / Test Cases -->
+        <aside class="sidebar-cases">
+            <div class="sidebar-header">
+                <span class="sidebar-tag">Benchmark Problems</span>
+                <h2>Lecture Slide Cases</h2>
+                <p>Click any case below to automatically populate the parameters, then proceed to calculate.</p>
             </div>
-            <h1>Transmission Line Parameter Calculator</h1>
-            <p>Compute generalized $R$, $L$, and $C$ line constants for Single &amp; Three-Phase overhead configurations.</p>
-        </header>
 
-        <form id="calculator-form">
-            <!-- Conductor Configuration -->
-            <section class="form-section">
-                <div class="section-header">
-                    <span class="section-number">01</span>
-                    <h2>Conductor Configuration</h2>
-                </div>
-                
-                <div class="input-group mt-1">
-                    <label>Conductor Stranding Architecture</label>
-                    <div class="radio-group">
-                        <label class="radio-card">
-                            <input type="radio" name="strand-type" value="single" checked> 
-                            <span class="radio-label">Single Strand</span>
-                        </label>
-                        <label class="radio-card">
-                            <input type="radio" name="strand-type" value="multiple"> 
-                            <span class="radio-label">Multiple Strands / Bundles</span>
-                        </label>
+            <div class="cases-list">
+                <!-- Case 1 -->
+                <div class="case-card" id="preset-1" role="button" tabindex="0">
+                    <div class="case-badge">
+                        <span class="case-num">Case 01</span>
+                        <span class="case-ref">05_Aug Slide 20</span>
+                    </div>
+                    <h3 class="case-title">DC Resistance of Aluminium Conductor</h3>
+                    <p class="case-statement">
+                        Find the DC resistance of an aluminium conductor, $10\text{ km}$ long, with a cross-sectional area of $100\text{ mm}^2$. Take $\rho(\text{Al}) = 2.8 \times 10^{-8}\ \Omega\cdot\text{m}$.
+                    </p>
+                    <div class="case-meta">
+                        <span class="meta-label">Target:</span>
+                        <span class="meta-val">$R = 2.8000\ \Omega$</span>
+                    </div>
+                    <div class="case-action">
+                        <span>Load Problem &darr;</span>
                     </div>
                 </div>
 
-                <div class="input-group hidden-dynamic" id="bundle-type-group">
-                    <label for="bundle-type">Conductor Bundle / ACSR Spec</label>
-                    <select id="bundle-type" name="bundle-type">
-                        <option value="2-bundle">2-Bundle Conductor</option>
-                        <option value="3-bundle">3-Bundle Conductor</option>
-                        <option value="4-bundle">4-Bundle Conductor</option>
-                        <option value="acsr">6/1 ACSR (7-Strand)</option>
-                    </select>
-                </div>
-
-                <div class="input-row">
-                    <div class="input-group">
-                        <label for="radius">Strand / Conductor Radius $r$ (m)</label>
-                        <input type="number" id="radius" name="radius" step="any" placeholder="e.g. 0.012" required>
+                <!-- Case 2 -->
+                <div class="case-card" id="preset-2" role="button" tabindex="0">
+                    <div class="case-badge">
+                        <span class="case-num">Case 02</span>
+                        <span class="case-ref">11_Aug Slide 11</span>
                     </div>
-                    <div class="input-group hidden-dynamic" id="bundle-spacing-group">
-                        <label for="bundle-spacing">Bundle Spacing $d$ (m)</label>
-                        <input type="number" id="bundle-spacing" name="bundle-spacing" placeholder="e.g. 0.4" step="any">
+                    <h3 class="case-title">Inductance of 7-Strand Single-Phase Line</h3>
+                    <p class="case-statement">
+                        A line composed of two stranded conductors consists of 7 identical strands each having radius $r = 1.68\text{ cm}$. Determine the inductance at $1\text{ m}$ spacing for $l = 1\text{ km}$.
+                    </p>
+                    <div class="case-meta">
+                        <span class="meta-label">Target:</span>
+                        <span class="meta-val">$L = 0.6620\text{ mH/km}$</span>
                     </div>
-                </div>
-            </section>
-
-            <!-- System Configuration -->
-            <section class="form-section">
-                <div class="section-header">
-                    <span class="section-number">02</span>
-                    <h2>System &amp; Geometry Configuration</h2>
-                </div>
-                
-                <div class="input-group mt-1">
-                    <label>Phase System</label>
-                    <div class="radio-group">
-                        <label class="radio-card">
-                            <input type="radio" name="system-type" value="single-phase" checked> 
-                            <span class="radio-label">Single Phase</span>
-                        </label>
-                        <label class="radio-card">
-                            <input type="radio" name="system-type" value="three-phase"> 
-                            <span class="radio-label">Three Phase</span>
-                        </label>
+                    <div class="case-action">
+                        <span>Load Problem &darr;</span>
                     </div>
                 </div>
 
-                <!-- Single Phase Inputs -->
-                <div class="input-group visible-dynamic" id="single-phase-inputs">
-                    <label for="distance-d">Distance Between Conductors $D$ (m)</label>
-                    <input type="number" id="distance-d" name="distance-d" placeholder="e.g. 4.0" step="any">
+                <!-- Case 3 -->
+                <div class="case-card" id="preset-3" role="button" tabindex="0">
+                    <div class="case-badge">
+                        <span class="case-num">Case 03</span>
+                        <span class="case-ref">12_Aug Slide 21</span>
+                    </div>
+                    <h3 class="case-title">Capacitance of 3-$\phi$ Bundled Line</h3>
+                    <p class="case-statement">
+                        A transposed 3-phase line has flat horizontal spacing with $10\text{ m}$ between adjacent conductors ($D_{12}=10, D_{23}=10, D_{31}=20\text{ m}$). Outside radius is $1.2\text{ cm}$, 2-bundle spacing $d = 0.4\text{ m}$.
+                    </p>
+                    <div class="case-meta">
+                        <span class="meta-label">Target:</span>
+                        <span class="meta-val">$C = 0.01071\ \mu\text{F/km}$</span>
+                    </div>
+                    <div class="case-action">
+                        <span>Load Problem &darr;</span>
+                    </div>
                 </div>
+            </div>
+        </aside>
 
-                <!-- Three Phase Inputs -->
-                <div class="hidden-dynamic" id="three-phase-inputs">
-                    <div class="input-group">
-                        <label>Tower Circuit Layout</label>
+        <!-- Right Main Panel: Calculator Form & Results -->
+        <main class="glass-panel">
+            <header>
+                <div class="course-badge">
+                    <span class="dot"></span>
+                    <span>EE 315 &bull; Power Systems &bull; Group 4</span>
+                </div>
+                <h1>Transmission Line Parameter Calculator</h1>
+                <p>Compute generalized $R$, $L$, and $C$ line constants for Single &amp; Three-Phase overhead configurations.</p>
+            </header>
+
+            <form id="calculator-form">
+                <!-- Conductor Configuration -->
+                <section class="form-section">
+                    <div class="section-header">
+                        <span class="section-number">01</span>
+                        <h2>Conductor Configuration</h2>
+                    </div>
+                    
+                    <div class="input-group mt-1">
+                        <label>Conductor Stranding Architecture</label>
                         <div class="radio-group">
                             <label class="radio-card">
-                                <input type="radio" name="circuit-type" value="single-circuit" checked> 
-                                <span class="radio-label">Single Circuit</span>
+                                <input type="radio" name="strand-type" value="single" checked> 
+                                <span class="radio-label">Single Strand</span>
                             </label>
                             <label class="radio-card">
-                                <input type="radio" name="circuit-type" value="double-circuit"> 
-                                <span class="radio-label">Double Circuit</span>
+                                <input type="radio" name="strand-type" value="multiple"> 
+                                <span class="radio-label">Multiple Strands / Bundles</span>
                             </label>
                         </div>
+                    </div>
+
+                    <div class="input-group hidden-dynamic" id="bundle-type-group">
+                        <label for="bundle-type">Conductor Bundle / ACSR Spec</label>
+                        <select id="bundle-type" name="bundle-type">
+                            <option value="2-bundle">2-Bundle Conductor</option>
+                            <option value="3-bundle">3-Bundle Conductor</option>
+                            <option value="4-bundle">4-Bundle Conductor</option>
+                            <option value="acsr">6/1 ACSR (7-Strand)</option>
+                        </select>
                     </div>
 
                     <div class="input-row">
                         <div class="input-group">
-                            <label for="d12">$D_{12}$ (m)</label>
-                            <input type="number" id="d12" name="d12" placeholder="Phase 1-2 spacing" step="any">
+                            <label for="radius">Strand / Conductor Radius $r$ (m)</label>
+                            <input type="number" id="radius" name="radius" step="any" placeholder="e.g. 0.012" required>
                         </div>
-                        <div class="input-group">
-                            <label for="d23">$D_{23}$ (m)</label>
-                            <input type="number" id="d23" name="d23" placeholder="Phase 2-3 spacing" step="any">
+                        <div class="input-group hidden-dynamic" id="bundle-spacing-group">
+                            <label for="bundle-spacing">Bundle Spacing $d$ (m)</label>
+                            <input type="number" id="bundle-spacing" name="bundle-spacing" placeholder="e.g. 0.4" step="any">
                         </div>
-                        <div class="input-group">
-                            <label for="d31">$D_{31}$ (m)</label>
-                            <input type="number" id="d31" name="d31" placeholder="Phase 3-1 spacing" step="any">
+                    </div>
+                </section>
+
+                <!-- System Configuration -->
+                <section class="form-section">
+                    <div class="section-header">
+                        <span class="section-number">02</span>
+                        <h2>System &amp; Geometry Configuration</h2>
+                    </div>
+                    
+                    <div class="input-group mt-1">
+                        <label>Phase System</label>
+                        <div class="radio-group">
+                            <label class="radio-card">
+                                <input type="radio" name="system-type" value="single-phase" checked> 
+                                <span class="radio-label">Single Phase</span>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="system-type" value="three-phase"> 
+                                <span class="radio-label">Three Phase</span>
+                            </label>
                         </div>
                     </div>
 
-                    <!-- Double Circuit Extra Inputs -->
-                    <div class="input-row hidden-dynamic" id="double-circuit-inputs">
+                    <!-- Single Phase Inputs -->
+                    <div class="input-group visible-dynamic" id="single-phase-inputs">
+                        <label for="distance-d">Distance Between Conductors $D$ (m)</label>
+                        <input type="number" id="distance-d" name="distance-d" placeholder="e.g. 4.0" step="any">
+                    </div>
+
+                    <!-- Three Phase Inputs -->
+                    <div class="hidden-dynamic" id="three-phase-inputs">
                         <div class="input-group">
-                            <label for="d1">$d_1$ (cross-distance 1) (m)</label>
-                            <input type="number" id="d1" name="d1" placeholder="d1" step="any">
+                            <label>Tower Circuit Layout</label>
+                            <div class="radio-group">
+                                <label class="radio-card">
+                                    <input type="radio" name="circuit-type" value="single-circuit" checked> 
+                                    <span class="radio-label">Single Circuit</span>
+                                </label>
+                                <label class="radio-card">
+                                    <input type="radio" name="circuit-type" value="double-circuit"> 
+                                    <span class="radio-label">Double Circuit</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="d12">$D_{12}$ (m)</label>
+                                <input type="number" id="d12" name="d12" placeholder="Phase 1-2 spacing" step="any">
+                            </div>
+                            <div class="input-group">
+                                <label for="d23">$D_{23}$ (m)</label>
+                                <input type="number" id="d23" name="d23" placeholder="Phase 2-3 spacing" step="any">
+                            </div>
+                            <div class="input-group">
+                                <label for="d31">$D_{31}$ (m)</label>
+                                <input type="number" id="d31" name="d31" placeholder="Phase 3-1 spacing" step="any">
+                            </div>
+                        </div>
+
+                        <!-- Double Circuit Extra Inputs -->
+                        <div class="input-row hidden-dynamic" id="double-circuit-inputs">
+                            <div class="input-group">
+                                <label for="d1">$d_1$ (cross-distance 1) (m)</label>
+                                <input type="number" id="d1" name="d1" placeholder="d1" step="any">
+                            </div>
+                            <div class="input-group">
+                                <label for="d2">$d_2$ (cross-distance 2) (m)</label>
+                                <input type="number" id="d2" name="d2" placeholder="d2" step="any">
+                            </div>
+                            <div class="input-group">
+                                <label for="d3">$d_3$ (cross-distance 3) (m)</label>
+                                <input type="number" id="d3" name="d3" placeholder="d3" step="any">
+                            </div>
+                            <div class="input-group">
+                                <label for="d4">$d_4$ (cross-distance 4) (m)</label>
+                                <input type="number" id="d4" name="d4" placeholder="d4" step="any">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Line Details -->
+                <section class="form-section">
+                    <div class="section-header">
+                        <span class="section-number">03</span>
+                        <h2>Material &amp; Line Span</h2>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="resistivity">Conductor Resistivity $\rho$ ($\Omega\cdot\text{m}$)</label>
+                            <input type="number" id="resistivity" name="resistivity" step="any" value="2.8e-8" required>
                         </div>
                         <div class="input-group">
-                            <label for="d2">$d_2$ (cross-distance 2) (m)</label>
-                            <input type="number" id="d2" name="d2" placeholder="d2" step="any">
+                            <label for="length">Line Length $l$ (m)</label>
+                            <input type="number" id="length" name="length" placeholder="e.g. 100000" step="any" required>
                         </div>
-                        <div class="input-group">
-                            <label for="d3">$d_3$ (cross-distance 3) (m)</label>
-                            <input type="number" id="d3" name="d3" placeholder="d3" step="any">
-                        </div>
-                        <div class="input-group">
-                            <label for="d4">$d_4$ (cross-distance 4) (m)</label>
-                            <input type="number" id="d4" name="d4" placeholder="d4" step="any">
-                        </div>
+                    </div>
+                </section>
+
+                <div id="action-anchor">
+                    <button type="submit" id="calculate-btn" class="primary-btn">
+                        <span>Calculate Line Parameters</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13 5L20 12L13 19M4 12H20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+
+            <div id="results" class="results-panel hidden-dynamic">
+                <div class="results-header">
+                    <h2>Computed Transmission Line Parameters</h2>
+                    <p>Derived via GMD / GMR formulation</p>
+                </div>
+                
+                <div class="intermediate-results">
+                    <div class="intermediate-item">
+                        <span class="intermediate-label">Geometric Mean Distance ($\text{GMD}$)</span>
+                        <span class="intermediate-value"><span id="res-gmd"></span> m</span>
+                    </div>
+                    <div class="intermediate-item">
+                        <span class="intermediate-label">$\text{GMR}_L$ (Inductive)</span>
+                        <span class="intermediate-value"><span id="res-gmrl"></span> m</span>
+                    </div>
+                    <div class="intermediate-item">
+                        <span class="intermediate-label">$\text{GMR}_C$ (Capacitive)</span>
+                        <span class="intermediate-value"><span id="res-gmrc"></span> m</span>
                     </div>
                 </div>
-            </section>
 
-            <!-- Line Details -->
-            <section class="form-section">
-                <div class="section-header">
-                    <span class="section-number">03</span>
-                    <h2>Material &amp; Line Span</h2>
-                </div>
-                <div class="input-row">
-                    <div class="input-group">
-                        <label for="resistivity">Conductor Resistivity $\rho$ ($\Omega\cdot\text{m}$)</label>
-                        <input type="number" id="resistivity" name="resistivity" step="any" value="2.8e-8" required>
+                <div class="results-grid">
+                    <div class="result-card res-resistance">
+                        <div class="result-top">
+                            <div class="result-icon">R</div>
+                            <span class="result-tag">Series Loss</span>
+                        </div>
+                        <h3>Total Resistance ($R$)</h3>
+                        <p id="res-total" class="result-value">0 &Omega;</p>
                     </div>
-                    <div class="input-group">
-                        <label for="length">Line Length $l$ (m)</label>
-                        <input type="number" id="length" name="length" placeholder="e.g. 100000" step="any" required>
+                    <div class="result-card res-inductance">
+                        <div class="result-top">
+                            <div class="result-icon">L</div>
+                            <span class="result-tag">Series Reactance</span>
+                        </div>
+                        <h3>Total Inductance ($L$)</h3>
+                        <p id="ind-total" class="result-value">0 H</p>
+                    </div>
+                    <div class="result-card res-capacitance">
+                        <div class="result-top">
+                            <div class="result-icon">C</div>
+                            <span class="result-tag">Shunt Admittance</span>
+                        </div>
+                        <h3>Total Capacitance ($C$)</h3>
+                        <p id="cap-total" class="result-value">0 F</p>
                     </div>
                 </div>
-            </section>
-
-            <button type="submit" class="primary-btn">
-                <span>Calculate Line Parameters</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M13 5L20 12L13 19M4 12H20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </button>
-        </form>
-
-        <div id="results" class="results-panel hidden-dynamic">
-            <div class="results-header">
-                <h2>Computed Transmission Line Parameters</h2>
-                <p>Derived via GMD / GMR formulation</p>
             </div>
-            
-            <div class="intermediate-results">
-                <div class="intermediate-item">
-                    <span class="intermediate-label">Geometric Mean Distance ($\text{GMD}$)</span>
-                    <span class="intermediate-value"><span id="res-gmd"></span> m</span>
-                </div>
-                <div class="intermediate-item">
-                    <span class="intermediate-label">$\text{GMR}_L$ (Inductive)</span>
-                    <span class="intermediate-value"><span id="res-gmrl"></span> m</span>
-                </div>
-                <div class="intermediate-item">
-                    <span class="intermediate-label">$\text{GMR}_C$ (Capacitive)</span>
-                    <span class="intermediate-value"><span id="res-gmrc"></span> m</span>
-                </div>
-            </div>
 
-            <div class="results-grid">
-                <div class="result-card res-resistance">
-                    <div class="result-top">
-                        <div class="result-icon">R</div>
-                        <span class="result-tag">Series Loss</span>
-                    </div>
-                    <h3>Total Resistance ($R$)</h3>
-                    <p id="res-total" class="result-value">0 &Omega;</p>
-                </div>
-                <div class="result-card res-inductance">
-                    <div class="result-top">
-                        <div class="result-icon">L</div>
-                        <span class="result-tag">Series Reactance</span>
-                    </div>
-                    <h3>Total Inductance ($L$)</h3>
-                    <p id="ind-total" class="result-value">0 H</p>
-                </div>
-                <div class="result-card res-capacitance">
-                    <div class="result-top">
-                        <div class="result-icon">C</div>
-                        <span class="result-tag">Shunt Admittance</span>
-                    </div>
-                    <h3>Total Capacitance ($C$)</h3>
-                    <p id="cap-total" class="result-value">0 F</p>
-                </div>
-            </div>
-        </div>
-
-        <footer>
-            <span>EE 315 &bull; Power Systems Course Project &bull; Group 4</span>
-        </footer>
-    </main>
+            <footer>
+                <span>EE 315 &bull; Power Systems Course Project &bull; Group 4</span>
+            </footer>
+        </main>
+    </div>
 
     <script src="script.js"></script>
 </body>

@@ -4,17 +4,56 @@
 A generalized computation tool for calculating the total **Resistance ($R$)**, **Inductance ($L$)**, and **Capacitance ($C$)** of overhead transmission lines based on Power Systems concepts (EE 315 / Module-2).
 
 This repository provides two complete implementations:
-1. 🌐 **Interactive Web Portal** (Vanilla HTML5, CSS3, & JavaScript with responsive UI)
+1. 🌐 **Interactive Web Portal** (Vanilla HTML5, CSS3 with KaTeX & JavaScript)
 2. 💻 **MATLAB Simulation Script** (`TL_Parameters_Calculator.m`)
 
 🔗 **Live Web Application:** [https://namanshetty25.github.io/power-systems-transmission-line-calculator/](https://namanshetty25.github.io/power-systems-transmission-line-calculator/)
 
 ---
 
+## 🧪 Verification & Benchmark Test Cases
+
+The calculator has been validated against lecture slide problems from Module-2:
+
+### 1. DC Resistance of Aluminium Conductor
+- **Module Reference:** `05_Aug_Conductor configuration and Resistance.pdf`, Slide 14
+- **Input Parameters:**
+  - Single Strand Conductor
+  - Radius $r = 0.00564\text{ m}$ (derived from area $A = 100\text{ mm}^2 = 100 \times 10^{-6}\text{ m}^2$ via $r = \sqrt{A/\pi}$)
+  - Resistivity $\rho = 2.8 \times 10^{-8}\ \Omega\cdot\text{m}$
+  - Line Length $l = 10000\text{ m}$ ($10\text{ km}$)
+- **Expected Output:**
+  - **Total Resistance ($R$):** $\mathbf{2.8000\ \Omega}$
+
+### 2. Inductance of 7-Strand Single-Phase Line
+- **Module Reference:** `11_Aug_Inductance calculation of 3-phase circuits.pdf`, Slide 12
+- **Input Parameters:**
+  - Multiple Strands: `6/1 ACSR` (7-strand equivalent, $\text{GMR}_L = 2.177 \cdot r$)
+  - Radius of each strand $r = 0.0168\text{ m}$
+  - Single Phase system with distance $D = 1.0\text{ m}$
+  - Line Length $l = 1000\text{ m}$ ($1\text{ km}$)
+- **Expected Output:**
+  - **Total Inductance ($L$):** $\mathbf{6.6200 \times 10^{-4}\text{ H}}$ ($0.662\text{ mH/km}$)
+
+### 3. Capacitance of 3-Phase Bundled Conductor
+- **Module Reference:** `12_Aug_Capacitance calculation of single-phase & 3-phase circuits.pdf`, Slide 13
+- **Input Parameters:**
+  - Multiple Strands: `2-bundle` ($\text{GMR}_C = \sqrt{r \cdot d}$)
+  - Strand radius $r = 0.012\text{ m}$
+  - Bundle spacing $d = 0.4\text{ m}$
+  - Three-Phase Single Circuit ($D_{12} = 10\text{ m}, D_{23} = 10\text{ m}, D_{31} = 20\text{ m}$)
+  - Line Length $l = 1000\text{ m}$ ($1\text{ km}$)
+- **Expected Output:**
+  - **Total Capacitance ($C$):** $\mathbf{1.0700 \times 10^{-8}\text{ F}}$ ($0.01071\ \mu\text{F/km}$)
+
+*(Note: In the live web portal, you can click any of the **Lecture Test Presets** buttons at the top to instantly load and compute these benchmark cases.)*
+
+---
+
 ## ⚡ Features & Supported Configurations
 
 ### 1. Conductor Stranding & Bundling
-- **Single Strand Conductors:** Standard single solid conductors.
+- **Single Strand Conductors:** Standard single solid conductors ($GMR_L = 0.7788 \cdot r$, $GMR_C = r$).
 - **Multiple Strands / Bundles:**
   - **2-Bundle:** $GMR_L = \sqrt{r' \cdot d}$, $GMR_C = \sqrt{r \cdot d}$
   - **3-Bundle:** $GMR_L = (r' \cdot d^2)^{1/3}$, $GMR_C = (r \cdot d^2)^{1/3}$
@@ -39,12 +78,12 @@ This repository provides two complete implementations:
 
 ```
 .
-├── index.html                  # Web application UI
-├── styles.css                  # Modern dark-mode glassmorphic styling
-├── script.js                   # Client-side parameter calculation engine
+├── index.html                  # Web application UI with KaTeX math rendering
+├── styles.css                  # Straight-edged engineering cream theme & grid
+├── script.js                   # Client-side parameter calculation engine & presets
 ├── TL_Parameters_Calculator.m  # Interactive MATLAB command-line simulation
 ├── .github/workflows/deploy.yml# GitHub Actions automated Pages deployment
-└── README.md                   # Project documentation
+└── README.md                   # Project documentation & test cases
 ```
 
 ---
