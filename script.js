@@ -79,15 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const activeCard = document.getElementById(cardId);
         if (activeCard) activeCard.classList.add('active-case');
 
-        // Smooth scroll to the calculate button so the user can verify & click
-        const anchor = document.getElementById('action-anchor');
-        if (anchor) {
-            anchor.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            calculateBtn.classList.add('highlight-pulse');
-            setTimeout(() => {
-                calculateBtn.classList.remove('highlight-pulse');
-            }, 2500);
-        }
+        // Automatically trigger calculation and reveal results
+        form.requestSubmit();
     }
 
     strandTypeRadios.forEach(r => r.addEventListener('change', updateUI));
@@ -95,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
     systemTypeRadios.forEach(r => r.addEventListener('change', updateUI));
     circuitTypeRadios.forEach(r => r.addEventListener('change', updateUI));
 
-    // Preset Handlers
+    // Preset Handlers with Auto-Calculation
     document.getElementById('preset-1')?.addEventListener('click', () => {
         // Case 1: DC Resistance (05_Aug Slide 20)
         document.querySelector('input[name="strand-type"][value="single"]').checked = true;
@@ -222,7 +215,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // --- 4. FINAL R, L, C CALCULATIONS ---
-        let R_total = (rho * L_len) / A;
+        let R_per_m = rho / A;
+        let R_total = R_per_m * L_len;
         
         let L_per_m = 2e-7 * Math.log(GMD / GMRL);
         let L_total = L_per_m * L_len;
@@ -233,8 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Output formatting
         function formatScientific(num) {
             if (num === 0) return "0";
-            if (num >= 0.01 && num < 10000) return num.toFixed(4);
-            return num.toExponential(4); 
+            return num.toExponential(6); 
         }
 
         // Update Intermediate results
@@ -242,10 +235,15 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('res-gmrl').textContent = GMRL.toFixed(5);
         document.getElementById('res-gmrc').textContent = GMRC.toFixed(5);
 
-        // Update Final Results
-        document.getElementById('res-total').innerHTML = `${formatScientific(R_total)} &Omega;`;
-        document.getElementById('ind-total').textContent = `${formatScientific(L_total)} H`;
-        document.getElementById('cap-total').textContent = `${formatScientific(C_total)} F`;
+        // Update Final Results with per-meter primary units
+        document.getElementById('res-total').innerHTML = `${formatScientific(R_per_m)} &Omega;/m`;
+        document.getElementById('res-sub').innerHTML = `Total (${L_len} m): ${formatScientific(R_total)} &Omega;`;
+
+        document.getElementById('ind-total').textContent = `${formatScientific(L_per_m)} H/m`;
+        document.getElementById('ind-sub').textContent = `Total (${L_len} m): ${formatScientific(L_total)} H`;
+
+        document.getElementById('cap-total').textContent = `${formatScientific(C_per_m)} F/m`;
+        document.getElementById('cap-sub').textContent = `Total (${L_len} m): ${formatScientific(C_total)} F`;
         
         // Show results with smooth transition
         toggleVisibility(resultsPanel, true);
@@ -261,10 +259,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         
-        // Scroll to results slightly
+        // Smooth scroll directly to results
         setTimeout(() => {
-            resultsPanel.scrollIntoView({ behavior: 'smooth', block: 'end' });
-        }, 100);
+            resultsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 120);
     });
 
     // Initial KaTeX render on page load

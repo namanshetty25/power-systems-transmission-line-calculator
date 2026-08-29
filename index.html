@@ -13,7 +13,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
     
-    <link rel="stylesheet" href="styles.css?v=2.0">
+    <link rel="stylesheet" href="styles.css?v=2.1">
 </head>
 <body>
     <div class="grid-pattern-bg"></div>
@@ -40,10 +40,10 @@
                     </p>
                     <div class="case-meta">
                         <span class="meta-label">Target:</span>
-                        <span class="meta-val">$R = 2.8000\ \Omega$</span>
+                        <span class="meta-val">$R' = 2.8000 \times 10^{-4}\ \Omega/\text{m}$ ($2.8\ \Omega$)</span>
                     </div>
                     <div class="case-action">
-                        <span>Load Problem &darr;</span>
+                        <span>Load &amp; Calculate &rarr;</span>
                     </div>
                 </div>
 
@@ -59,10 +59,10 @@
                     </p>
                     <div class="case-meta">
                         <span class="meta-label">Target:</span>
-                        <span class="meta-val">$L = 0.6620\text{ mH/km}$</span>
+                        <span class="meta-val">$L' = 6.6200 \times 10^{-7}\text{ H/m}$ ($0.662\text{ mH/km}$)</span>
                     </div>
                     <div class="case-action">
-                        <span>Load Problem &darr;</span>
+                        <span>Load &amp; Calculate &rarr;</span>
                     </div>
                 </div>
 
@@ -78,10 +78,10 @@
                     </p>
                     <div class="case-meta">
                         <span class="meta-label">Target:</span>
-                        <span class="meta-val">$C = 0.01071\ \mu\text{F/km}$</span>
+                        <span class="meta-val">$C' = 1.0710 \times 10^{-11}\text{ F/m}$ ($0.01071\ \mu\text{F/km}$)</span>
                     </div>
                     <div class="case-action">
-                        <span>Load Problem &darr;</span>
+                        <span>Load &amp; Calculate &rarr;</span>
                     </div>
                 </div>
             </div>
@@ -277,24 +277,27 @@
                             <div class="result-icon">R</div>
                             <span class="result-tag">Series Loss</span>
                         </div>
-                        <h3>Total Resistance ($R$)</h3>
-                        <p id="res-total" class="result-value">0 &Omega;</p>
+                        <h3>Resistance ($R'$)</h3>
+                        <p id="res-total" class="result-value">0 &Omega;/m</p>
+                        <span id="res-sub" class="result-sub">Total: 0 &Omega;</span>
                     </div>
                     <div class="result-card res-inductance">
                         <div class="result-top">
                             <div class="result-icon">L</div>
                             <span class="result-tag">Series Reactance</span>
                         </div>
-                        <h3>Total Inductance ($L$)</h3>
-                        <p id="ind-total" class="result-value">0 H</p>
+                        <h3>Inductance ($L'$)</h3>
+                        <p id="ind-total" class="result-value">0 H/m</p>
+                        <span id="ind-sub" class="result-sub">Total: 0 H</span>
                     </div>
                     <div class="result-card res-capacitance">
                         <div class="result-top">
                             <div class="result-icon">C</div>
                             <span class="result-tag">Shunt Admittance</span>
                         </div>
-                        <h3>Total Capacitance ($C$)</h3>
-                        <p id="cap-total" class="result-value">0 F</p>
+                        <h3>Capacitance ($C'$)</h3>
+                        <p id="cap-total" class="result-value">0 F/m</p>
+                        <span id="cap-sub" class="result-sub">Total: 0 F</span>
                     </div>
                 </div>
             </div>
@@ -305,6 +308,6 @@
         </main>
     </div>
 
-    <script src="script.js?v=2.0"></script>
+    <script src="script.js?v=2.1"></script>
 </body>
 </html>
