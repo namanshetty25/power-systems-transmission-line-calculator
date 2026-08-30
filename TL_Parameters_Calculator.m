@@ -164,3 +164,112 @@ fprintf('Total Inductance (L)  : %.6e Henries\n', L_total);
 fprintf('Total Capacitance (C) : %.6e Farads\n', C_total);
 
 fprintf('======================================\n');
+
+% ==========================================================
+% PLOTTING: Conductor Cross Section & Circuit Tower Layout
+% ==========================================================
+figure('Name', 'Transmission Line Visualizer', 'NumberTitle', 'off', 'Color', [0.98 0.98 0.96]);
+
+% --- Plot 1: Conductor Cross-Section ---
+subplot(1, 2, 1);
+hold on; axis equal; grid on;
+if strand_choice == 1
+    % Single strand
+    viscircles([0, 0], r, 'Color', [0.15 0.38 0.92], 'LineWidth', 2);
+    plot(0, 0, 'b+', 'MarkerSize', 8, 'LineWidth', 1.5);
+    title(sprintf('Conductor Cross-Section: Single Strand\nr = %.2f mm, GMR_L = %.2f mm', r*1000, GMRL*1000));
+    xlim([-r*2.2, r*2.2]); ylim([-r*2.2, r*2.2]);
+else
+    if bundle_type == 4
+        % 6/1 ACSR (7-Strand)
+        viscircles([0, 0], r, 'Color', [0.28 0.33 0.41], 'LineWidth', 2); % Central Steel
+        text(0, 0, 'Steel', 'HorizontalAlignment', 'center', 'FontSize', 8, 'FontWeight', 'bold');
+        for i = 0:5
+            th = i * (pi / 3);
+            viscircles([2*r*cos(th), 2*r*sin(th)], r, 'Color', [0.15 0.38 0.92], 'LineWidth', 1.5);
+            plot(2*r*cos(th), 2*r*sin(th), 'k.', 'MarkerSize', 4);
+        end
+        title(sprintf('Conductor Cross-Section: 6/1 ACSR (7-Strand)\nr = %.2f mm, GMR = %.2f mm', r*1000, GMRL*1000));
+        xlim([-3.5*r, 3.5*r]); ylim([-3.5*r, 3.5*r]);
+    elseif bundle_type == 1
+        % 2-bundle
+        viscircles([-d/2, 0], r, 'Color', [0.15 0.38 0.92], 'LineWidth', 2);
+        viscircles([d/2, 0], r, 'Color', [0.15 0.38 0.92], 'LineWidth', 2);
+        plot([-d/2, d/2], [0, 0], 'k--', 'LineWidth', 1.2);
+        title(sprintf('Conductor Cross-Section: 2-Bundle\nd = %.2f m, r = %.2f mm', d, r*1000));
+        xlim([-d*0.8, d*0.8]); ylim([-d*0.8, d*0.8]);
+    elseif bundle_type == 2
+        % 3-bundle
+        h = d * sqrt(3) / 2;
+        pts = [-d/2, -h/3; d/2, -h/3; 0, 2*h/3];
+        viscircles(pts, [r; r; r], 'Color', [0.15 0.38 0.92], 'LineWidth', 2);
+        plot([pts(:,1); pts(1,1)], [pts(:,2); pts(1,2)], 'k--', 'LineWidth', 1.2);
+        title(sprintf('Conductor Cross-Section: 3-Bundle Triangle\nd = %.2f m, r = %.2f mm', d, r*1000));
+        xlim([-d*0.8, d*0.8]); ylim([-d*0.8, d*0.8]);
+    elseif bundle_type == 3
+        % 4-bundle
+        s = d / 2;
+        pts = [-s, -s; s, -s; s, s; -s, s];
+        viscircles(pts, [r; r; r; r], 'Color', [0.15 0.38 0.92], 'LineWidth', 2);
+        plot([pts(:,1); pts(1,1)], [pts(:,2); pts(1,2)], 'k--', 'LineWidth', 1.2);
+        title(sprintf('Conductor Cross-Section: 4-Bundle Square\nd = %.2f m, r = %.2f mm', d, r*1000));
+        xlim([-d*0.8, d*0.8]); ylim([-d*0.8, d*0.8]);
+    end
+end
+xlabel('X (m)'); ylabel('Y (m)');
+
+% --- Plot 2: Circuit / Tower Geometry Layout ---
+subplot(1, 2, 2);
+hold on; axis equal; grid on;
+if phase_choice == 1
+    % Single Phase
+    plot(-D/2, 0, 'bo', 'MarkerSize', 12, 'MarkerFaceColor', [0.15 0.38 0.92]);
+    plot(D/2, 0, 'ro', 'MarkerSize', 12, 'MarkerFaceColor', [0.92 0.35 0.05]);
+    plot([-D/2, D/2], [0, 0], 'k--', 'LineWidth', 1.2);
+    text(-D/2, D*0.12, 'Phase A', 'HorizontalAlignment', 'center', 'FontWeight', 'bold');
+    text(D/2, D*0.12, 'Phase B', 'HorizontalAlignment', 'center', 'FontWeight', 'bold');
+    title(sprintf('Circuit Geometry: Single Phase\nD = %.2f m, GMD = %.2f m', D, GMD));
+    xlim([-D*0.85, D*0.85]); ylim([-D*0.5, D*0.5]);
+else
+    if ckt_choice == 1
+        % 3-Phase Single Circuit
+        if abs((D12 + D23) - D31) < 1e-3
+            % Flat horizontal
+            plot(-D12, 0, 'ro', 'MarkerSize', 10, 'MarkerFaceColor', 'r');
+            plot(0, 0, 'yo', 'MarkerSize', 10, 'MarkerFaceColor', [0.85 0.65 0.05]);
+            plot(D23, 0, 'bo', 'MarkerSize', 10, 'MarkerFaceColor', 'b');
+            plot([-D12, D23], [0, 0], 'k--', 'LineWidth', 1.2);
+            text(-D12, max(D12,D23)*0.1, 'Phase A', 'HorizontalAlignment', 'center');
+            text(0, max(D12,D23)*0.1, 'Phase B', 'HorizontalAlignment', 'center');
+            text(D23, max(D12,D23)*0.1, 'Phase C', 'HorizontalAlignment', 'center');
+            title(sprintf('Circuit Geometry: 3-Phase Flat Single\nGMD = %.2f m', GMD));
+        else
+            % Triangular
+            x1 = (D12^2 - D31^2 + D23^2) / (2 * D23);
+            y1 = sqrt(max(0, D12^2 - x1^2));
+            cx = (x1 + D23) / 3; cy = y1 / 3;
+            plot(x1 - cx, y1 - cy, 'ro', 'MarkerSize', 10, 'MarkerFaceColor', 'r');
+            plot(0 - cx, 0 - cy, 'yo', 'MarkerSize', 10, 'MarkerFaceColor', [0.85 0.65 0.05]);
+            plot(D23 - cx, 0 - cy, 'bo', 'MarkerSize', 10, 'MarkerFaceColor', 'b');
+            plot([x1-cx, 0-cx, D23-cx, x1-cx], [y1-cy, 0-cy, 0-cy, y1-cy], 'k--', 'LineWidth', 1.2);
+            title(sprintf('Circuit Geometry: 3-Phase Triangular\nGMD = %.2f m', GMD));
+        end
+    else
+        % Double Circuit
+        plot([0, 0], [-d4*1.4, d4*1.4], 'k-.', 'LineWidth', 1.5); % Centerline
+        % Left Circuit
+        plot(-d1/2, d4, 'bo', 'MarkerSize', 10, 'MarkerFaceColor', 'b');
+        plot(-d2/2, 0, 'bo', 'MarkerSize', 10, 'MarkerFaceColor', 'b');
+        plot(-d3/2, -d4, 'bo', 'MarkerSize', 10, 'MarkerFaceColor', 'b');
+        % Right Circuit
+        plot(d1/2, d4, 'ro', 'MarkerSize', 10, 'MarkerFaceColor', [0.92 0.35 0.05]);
+        plot(d2/2, 0, 'ro', 'MarkerSize', 10, 'MarkerFaceColor', [0.92 0.35 0.05]);
+        plot(d3/2, -d4, 'ro', 'MarkerSize', 10, 'MarkerFaceColor', [0.92 0.35 0.05]);
+        % Crossarms
+        plot([-d1/2, d1/2], [d4, d4], 'k-', 'LineWidth', 1.5);
+        plot([-d2/2, d2/2], [0, 0], 'k-', 'LineWidth', 1.5);
+        plot([-d3/2, d3/2], [-d4, -d4], 'k-', 'LineWidth', 1.5);
+        title(sprintf('Circuit Geometry: 3-Phase Double Circuit\nGMD = %.2f m', GMD));
+    end
+end
+xlabel('X (m)'); ylabel('Y (m)');

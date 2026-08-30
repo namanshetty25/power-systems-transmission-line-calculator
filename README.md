@@ -74,14 +74,31 @@ The calculator has been validated against lecture slide problems from Module-2:
 
 ---
 
+## 📊 Interactive Real-Time Visual Plots
+
+The application includes two real-time visualizers available in both the **Interactive Web Portal**, **MATLAB Simulation**, and the **Python Matplotlib Visualizer**:
+
+1. **Plot 1: Conductor Cross-Section & Stranding Architecture**
+   - Dynamic cross-section rendering for Single Solid Strand, 2-Bundle, 3-Bundle ($\Delta$), 4-Bundle (Square), and 6/1 ACSR (7-Strand with central steel core and 6 outer aluminium strands).
+   - Real-time dimension markings for strand radius $r$ and subconductor spacing $d$.
+   - Live calculations for conducting cross-sectional area $A$, effective radius $r'$, and inductive/capacitive GMR ($\text{GMR}_L$, $\text{GMR}_C$).
+
+2. **Plot 2: Circuit & Tower Spatial Geometry Layout**
+   - **Single-Phase Lines:** Conductor nodes $a$ and $b$ spaced horizontally at distance $D$ with ground plane reference.
+   - **Three-Phase Single Circuit:** Flat horizontal and triangular arrangements with inter-phase distances $D_{12}, D_{23}, D_{31}$ and phase color-coding ($A, B, C$).
+   - **Three-Phase Double Circuit:** Symmetrical tower cross-arms ($d_1, d_2, d_3$), vertical separation ($d_4$), tower centerline, and transposed parallel circuits ($a, b, c$ and $a', b', c'$).
+
+---
+
 ## 📂 Repository Structure
 
 ```
 .
-├── index.html                  # Web application UI with KaTeX math rendering
-├── styles.css                  # Straight-edged engineering cream theme & grid
-├── script.js                   # Client-side parameter calculation engine & presets
-├── TL_Parameters_Calculator.m  # Interactive MATLAB command-line simulation
+├── index.html                  # Web application UI with dual real-time vector visualizers
+├── styles.css                  # Straight-edged engineering cream theme & diagram grid
+├── script.js                   # Client-side parameter calculation engine & dynamic SVG plots
+├── plot_transmission_line.py   # Standalone Python Matplotlib visualization script
+├── TL_Parameters_Calculator.m  # Interactive MATLAB CLI simulation with figure plots
 ├── .github/workflows/deploy.yml# GitHub Actions automated Pages deployment
 └── README.md                   # Project documentation & test cases
 ```
@@ -99,7 +116,13 @@ The calculator has been validated against lecture slide problems from Module-2:
    start index.html
    ```
 
-### Option B: MATLAB Simulation
+### Option B: Python Matplotlib Visualizer
+Generate publication-quality figures for lab reports:
+```bash
+python plot_transmission_line.py
+```
+
+### Option C: MATLAB Simulation & Plots
 1. Open MATLAB.
 2. Open and run `TL_Parameters_Calculator.m`.
-3. Follow the interactive prompts to enter conductor dimensions, line geometry, resistivity, and line length.
+3. Follow the interactive prompts to enter conductor dimensions, line geometry, resistivity, and line length. MATLAB will display the numerical results and pop up the dual-plot visualization window.

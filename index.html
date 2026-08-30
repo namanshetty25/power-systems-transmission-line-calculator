@@ -13,7 +13,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
     
-    <link rel="stylesheet" href="styles.css?v=2.2">
+    <link rel="stylesheet" href="styles.css?v=2.3">
 </head>
 <body>
     <div class="grid-pattern-bg"></div>
@@ -222,10 +222,77 @@
                     </div>
                 </section>
 
-                <!-- Line Details -->
-                <section class="form-section">
+                <!-- Section 03: Interactive Visual Plots & Layouts -->
+                <section class="form-section visualizers-section">
                     <div class="section-header">
                         <span class="section-number">03</span>
+                        <h2>Real-Time Visual Architecture &amp; System Layout</h2>
+                    </div>
+                    <p class="section-desc">Dynamic vector plots for conductor cross-sectional stranding and transmission circuit spatial geometry.</p>
+                    
+                    <div class="visualizers-grid">
+                        <!-- Plot 1: Conductor Cross-Section -->
+                        <div class="visualizer-card">
+                            <div class="visualizer-card-header">
+                                <div class="v-header-left">
+                                    <span class="v-chip">Plot 01</span>
+                                    <h3 id="conductor-diagram-title">Conductor Cross-Section</h3>
+                                </div>
+                                <span class="v-badge" id="conductor-spec-badge">Single Strand</span>
+                            </div>
+                            <div class="diagram-canvas-container" id="conductor-diagram-container">
+                                <div id="conductor-diagram" class="diagram-svg-wrap"></div>
+                            </div>
+                            <div class="visualizer-card-footer" id="conductor-footer-info">
+                                <div class="v-stat">
+                                    <span class="v-stat-label">Area $A$</span>
+                                    <span class="v-stat-val" id="v-stat-area">—</span>
+                                </div>
+                                <div class="v-stat">
+                                    <span class="v-stat-label">$\text{GMR}_L$</span>
+                                    <span class="v-stat-val" id="v-stat-gmrl">—</span>
+                                </div>
+                                <div class="v-stat">
+                                    <span class="v-stat-label">$\text{GMR}_C$</span>
+                                    <span class="v-stat-val" id="v-stat-gmrc">—</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Plot 2: Circuit / Tower Geometry Layout -->
+                        <div class="visualizer-card">
+                            <div class="visualizer-card-header">
+                                <div class="v-header-left">
+                                    <span class="v-chip">Plot 02</span>
+                                    <h3 id="circuit-diagram-title">Circuit &amp; Tower Geometry</h3>
+                                </div>
+                                <span class="v-badge" id="circuit-spec-badge">Single Phase</span>
+                            </div>
+                            <div class="diagram-canvas-container" id="circuit-diagram-container">
+                                <div id="circuit-diagram" class="diagram-svg-wrap"></div>
+                            </div>
+                            <div class="visualizer-card-footer" id="circuit-footer-info">
+                                <div class="v-stat">
+                                    <span class="v-stat-label">System</span>
+                                    <span class="v-stat-val" id="v-stat-system">1-Phase</span>
+                                </div>
+                                <div class="v-stat">
+                                    <span class="v-stat-label">Spacing</span>
+                                    <span class="v-stat-val" id="v-stat-spacing">—</span>
+                                </div>
+                                <div class="v-stat">
+                                    <span class="v-stat-label">$\text{GMD}$</span>
+                                    <span class="v-stat-val" id="v-stat-gmd">—</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 04: Material & Line Span -->
+                <section class="form-section">
+                    <div class="section-header">
+                        <span class="section-number">04</span>
                         <h2>Material &amp; Line Span</h2>
                     </div>
                     <div class="input-row">
@@ -305,6 +372,6 @@
         </main>
     </div>
 
-    <script src="script.js?v=2.2"></script>
+    <script src="script.js?v=2.3"></script>
 </body>
 </html>
